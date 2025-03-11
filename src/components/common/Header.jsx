@@ -16,10 +16,9 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-around;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
-  right: 0;
   width: 100%;
   max-width: 100%;
   height: 60px;
@@ -27,6 +26,9 @@ export const Container = styled.div`
   box-sizing: border-box;
   border-bottom: 1px solid gray;
   overflow-x: hidden;
+  overflow-y: hidden;
+  font-size: 20px;
+  background-color: #f4f5f7;
 `;
 
 export const Text = styled.p`
