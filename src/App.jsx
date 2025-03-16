@@ -1,16 +1,18 @@
 import { Routes, Route } from "react-router-dom";
-import Login from "./pages/login/Login";
 import Header from "./components/common/Header";
-import SignUp from "./pages/signup/Signup";
+import Login from "./pages/auth/Login";
+import Signup from "./pages/auth/Signup";
 import PostList from "./pages/post/PostList";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
     <>
       <Header />
+      <Toaster />
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="/postList" element={<PostList />} />
       </Routes>
     </>

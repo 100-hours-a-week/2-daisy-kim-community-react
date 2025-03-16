@@ -60,3 +60,9 @@ button {
     background-color: #f9f9f9;
   }
 }
+
+#_rht_toaster {
+  top: 20vw !important;
+  font-size: 14px;
+  font-weight: 600;
+}
