@@ -12,14 +12,15 @@ export default function Login() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    navigate("/postList");
-  }, [isLoggedIn]);
+    if (isLoggedIn) navigate("/postList");
+  }, [isLoggedIn, navigate]);
 
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email) return "* 올바른 이메일 주소 형식을 입력해주세요.";
     if (!emailRegex.test(email))
       return "* 올바른 이메일 주소 형식을 입력해주세요.";
+    return "";
   };
 
   const validatePassword = (password) => {
@@ -35,6 +36,7 @@ export default function Login() {
       return "* 비밀번호에 숫자를 최소 1개 포함해야 합니다.";
     if (!/[\W_]/.test(password))
       return "* 비밀번호에 특수문자를 최소 1개 포함해야 합니다.";
+    return "";
   };
 
   const handleEmailChange = (e) => {
@@ -52,7 +54,7 @@ export default function Login() {
   const handleLogin = (e) => {
     e.preventDefault();
 
-    const isValidUser = email === "test@naver.com" || password === "Test1234!";
+    const isValidUser = email === "test@naver.com" && password === "Test1234!";
     if (!isValidUser) {
       toast.error("아이디 또는 비밀번호를 확인해주세요");
     } else {
@@ -76,17 +78,17 @@ export default function Login() {
 
         <FormText>비밀번호</FormText>
         <FormInput
-          type="text"
+          type="password"
           value={password}
           onChange={handlePasswordChange}
-          placeholder="***********"
+          placeholder="••••••••"
         />
         {passwordError && <ErrorText>{passwordError}</ErrorText>}
 
         <LoginButton type="submit" onClick={handleLogin}>
           로그인
         </LoginButton>
-        <LinkToText onClick={navigate("/signup")}>회원가입</LinkToText>
+        <LinkToText onClick={() => navigate("/signup")}>회원가입</LinkToText>
       </FormContainer>
     </Container>
   );
