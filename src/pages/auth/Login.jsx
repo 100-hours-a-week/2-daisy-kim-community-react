@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { useAuthForm } from "../../hooks/useAuthForm";
+import { useAuthForm } from "@hooks/useAuthForm";
 
 export default function Login() {
   const navigate = useNavigate();

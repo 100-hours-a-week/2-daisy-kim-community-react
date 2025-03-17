@@ -4,7 +4,7 @@ import {
   validateConfirmPassword,
   validateEmail,
   validatePassword,
-} from "../utils/validators";
+} from "@utils/validators";
 
 export const useAuthForm = (formType, navigate) => {
   const [email, setEmail] = useState("");

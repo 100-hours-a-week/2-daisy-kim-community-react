@@ -1,9 +1,10 @@
 import { Routes, Route } from "react-router-dom";
-import Header from "./components/common/Header";
-import Login from "./pages/auth/Login";
-import Signup from "./pages/auth/Signup";
-import PostList from "./pages/post/PostList";
+import Header from "@components/common/Header";
+import Login from "@pages/auth/Login";
+import Signup from "@pages/auth/Signup";
+import PostList from "@pages/post/PostList.jsx";
 import { Toaster } from "react-hot-toast";
+import PostDetail from "@pages/post/PostDetail.jsx";
 
 function App() {
   return (
@@ -13,7 +14,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/postList" element={<PostList />} />
+        <Route path="/postlist" element={<PostList />} />
+        <Route path="/postdetail" element={<PostDetail />} />
       </Routes>
     </>
   );

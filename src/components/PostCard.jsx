@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { formatNumber } from "../utils/validators";
+import { formatNumber } from "@utils/validators";
 
 export default function PostCard({
   title,
