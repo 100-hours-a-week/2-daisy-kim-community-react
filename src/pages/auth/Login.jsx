@@ -1,44 +1,18 @@
-import { useEffect, useState } from "react";
 import styled from "styled-components";
-import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { validateEmail, validatePassword } from "../../utils/validators";
+import { useAuthForm } from "../../hooks/useAuthForm";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (isLoggedIn) navigate("/postList");
-  }, [isLoggedIn, navigate]);
-
-  const handleEmailChange = (e) => {
-    const newEmail = e.target.value;
-    setEmail(newEmail);
-    setEmailError(validateEmail(newEmail));
-  };
-
-  const handlePasswordChange = (e) => {
-    const newPassword = e.target.value;
-    setPassword(newPassword);
-    setPasswordError(validatePassword(newPassword));
-  };
-
-  const handleLogin = (e) => {
-    e.preventDefault();
-
-    const isValidUser = email === "test@naver.com" && password === "Test1234!";
-    if (!isValidUser) {
-      toast.error("아이디 또는 비밀번호를 확인해주세요");
-    } else {
-      toast.success("로그인 성공!");
-      setIsLoggedIn(true);
-    }
-  };
+  const {
+    email,
+    password,
+    emailError,
+    passwordError,
+    handleEmailChange,
+    handlePasswordChange,
+    handleLogin,
+  } = useAuthForm("login", navigate);
 
   return (
     <Container>

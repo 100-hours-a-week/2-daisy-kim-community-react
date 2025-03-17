@@ -1,72 +1,26 @@
-import { useEffect, useState } from "react";
 import styled from "styled-components";
-import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { FaPlus } from "react-icons/fa6";
-import {
-  validateConfirmPassword,
-  validateEmail,
-  validatePassword,
-} from "../../utils/validators";
+import { useAuthForm } from "../../hooks/useAuthForm";
 
 export default function Signup() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [confirmPasswordError, setConfirmPasswordError] = useState("");
-  const [nickname, setNickname] = useState("");
-  const [isRegistered, setIsRegistered] = useState("");
-  const [profileImage, setProfileImage] = useState(null);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (isRegistered) navigate("/");
-  }, [isRegistered, navigate]);
-
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setProfileImage(URL.createObjectURL(file));
-    }
-  };
-
-  const handleEmailChange = (e) => {
-    const newEmail = e.target.value;
-    setEmail(newEmail);
-    setEmailError(validateEmail(newEmail));
-  };
-
-  const handlePasswordChange = (e) => {
-    const newPassword = e.target.value;
-    setPassword(newPassword);
-    setPasswordError(validatePassword(newPassword));
-
-    setConfirmPasswordError();
-  };
-
-  const handleConfirmPasswordChange = (e) => {
-    const newConfirmPassword = e.target.value;
-    setConfirmPassword(newConfirmPassword);
-
-    setConfirmPasswordError(
-      validateConfirmPassword(newConfirmPassword, password)
-    );
-  };
-
-  const handleNicknameChange = (e) => {
-    setNickname(e.target.value);
-  };
-
-  const handleSignup = (e) => {
-    e.preventDefault();
-
-    if (!emailError && !passwordError && !confirmPasswordError) {
-      toast.success("회원가입 성공!");
-      setIsRegistered(true);
-    }
-  };
+  const {
+    email,
+    password,
+    confirmPassword,
+    nickname,
+    profileImage,
+    emailError,
+    passwordError,
+    confirmPasswordError,
+    handleEmailChange,
+    handlePasswordChange,
+    handleConfirmPasswordChange,
+    handleNicknameChange,
+    handleImageUpload,
+    handleSignup,
+  } = useAuthForm("signup", navigate);
 
   return (
     <Container>
