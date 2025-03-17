@@ -1,50 +1,8 @@
 import styled from "styled-components";
-import PostCard from "../../components/PostCard";
+import PostCard from "@components/PostCard";
+import { postListDummy } from "@data/postListDummy";
 
 export default function PostList() {
-  const postDummy = [
-    {
-      id: 1,
-      title: "제목 1",
-      likes: 10,
-      comments: 20,
-      views: 3000000,
-      date: "2025-03-10 12:03:48",
-      profileImage: "https://placehold.co/",
-      author: "작성자 1",
-    },
-    {
-      id: 2,
-      title: "제목 2",
-      likes: 10,
-      comments: 20,
-      views: 30000,
-      date: "2025-03-10 12:03:48",
-      profileImage: "https://placehold.co/",
-      author: "작성자 2",
-    },
-    {
-      id: 3,
-      title: "제목 3",
-      likes: 10,
-      comments: 20,
-      views: 3000,
-      date: "2025-03-10 12:03:48",
-      profileImage: "https://placehold.co/",
-      author: "작성자 3",
-    },
-    {
-      id: 4,
-      title: "제목 4",
-      likes: 10,
-      comments: 20,
-      views: 3000,
-      date: "2025-03-10 12:03:48",
-      profileImage: "https://placehold.co/",
-      author: "작성자 4",
-    },
-  ];
-
   return (
     <Container>
       <Wrapper>
@@ -53,7 +11,7 @@ export default function PostList() {
           아무 말 대잔치 <b>게시판</b>입니다.
         </TitleText>
         <WriteButton>게시글 작성</WriteButton>
-        {postDummy.map((post) => (
+        {postListDummy.map((post) => (
           <PostCard
             key={post.id}
             title={post.title}
