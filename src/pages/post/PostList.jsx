@@ -8,10 +8,40 @@ export default function PostList() {
       title: "제목 1",
       likes: 10,
       comments: 20,
-      views: 30,
+      views: 3000000,
       date: "2025-03-10 12:03:48",
       profileImage: "https://placehold.co/",
-      author: "작성자1",
+      author: "작성자 1",
+    },
+    {
+      id: 2,
+      title: "제목 2",
+      likes: 10,
+      comments: 20,
+      views: 30000,
+      date: "2025-03-10 12:03:48",
+      profileImage: "https://placehold.co/",
+      author: "작성자 2",
+    },
+    {
+      id: 3,
+      title: "제목 3",
+      likes: 10,
+      comments: 20,
+      views: 3000,
+      date: "2025-03-10 12:03:48",
+      profileImage: "https://placehold.co/",
+      author: "작성자 3",
+    },
+    {
+      id: 4,
+      title: "제목 4",
+      likes: 10,
+      comments: 20,
+      views: 3000,
+      date: "2025-03-10 12:03:48",
+      profileImage: "https://placehold.co/",
+      author: "작성자 4",
     },
   ];
 
@@ -54,7 +84,6 @@ const Wrapper = styled.div`
   flex-direction: column;
   width: 50%;
   height: calc(100vh - 60px);
-  background-color: pink;
 `;
 
 const TitleText = styled.p`
@@ -78,4 +107,8 @@ const WriteButton = styled.button`
   margin-bottom: 20px;
   color: white;
   background-color: #aea0eb;
+
+  :hover {
+    background-color: #7f6aee;
+  }
 `;

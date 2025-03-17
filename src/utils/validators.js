@@ -27,3 +27,15 @@ export const validateConfirmPassword = (newConfirmPassword, password) => {
     ? ""
     : "* 비밀번호가 일치하지 않습니다.";
 };
+
+// 숫자 단위 변환 함수 100,000 → 100k
+export const formatNumber = (num) => {
+  if (num >= 100000) {
+    return `${Math.floor(num / 1000)}k`;
+  } else if (num >= 10000) {
+    return `${Math.floor(num / 1000)}k`;
+  } else if (num >= 1000) {
+    return `${Math.floor(num / 1000)}k`;
+  }
+  return num.toString();
+};

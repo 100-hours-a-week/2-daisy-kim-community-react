@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { formatNumber } from "../utils/validators";
 
 export default function PostCard({
   title,
@@ -15,7 +16,8 @@ export default function PostCard({
 
       <InfoSection>
         <InfoText>
-          좋아요 {likes} 댓글 {comments} 조회수 {views}
+          좋아요 {formatNumber(likes)} 댓글 {formatNumber(comments)} 조회수{" "}
+          {formatNumber(views)}
         </InfoText>
         <CreatedDate>{date}</CreatedDate>
       </InfoSection>
@@ -36,6 +38,7 @@ const Container = styled.div`
   background-color: white;
   padding: 10px;
   box-sizing: border-box;
+  margin-bottom: 10px;
 `;
 
 const Title = styled.p`
