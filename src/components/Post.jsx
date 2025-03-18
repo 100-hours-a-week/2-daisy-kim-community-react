@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export default function Post({
-  PostTitle,
+  title,
   profileImage,
   author,
   date,
@@ -12,7 +12,7 @@ export default function Post({
 }) {
   return (
     <Container>
-      <PostTitle>{PostTitle}</PostTitle>
+      <PostTitle>{title}</PostTitle>
       <PostAuthorSection>
         <PostAuthorInfo>
           <ProfileImage src={profileImage} />
@@ -67,6 +67,7 @@ const PostAuthorSection = styled.div`
   padding: 10px;
 
   border-bottom: 1px solid lightgray;
+  box-sizing: border-box;
 `;
 
 const PostAuthorInfo = styled.div`
@@ -149,6 +150,7 @@ const PostStatsSection = styled.div`
   padding: 10px;
   padding-bottom: 20px;
   border-bottom: 1px solid lightgray;
+  box-sizing: border-box;
 `;
 
 const StatBox = styled.div`

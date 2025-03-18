@@ -62,12 +62,13 @@ const Wrapper = styled.div`
 
 const WriteCommentSection = styled.div`
   width: 100%;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   background-color: white;
   border-radius: 12px;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   padding: 10px;
 `;
 
