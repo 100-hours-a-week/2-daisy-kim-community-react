@@ -6,6 +6,8 @@ import PostList from "@pages/post/PostList.jsx";
 import { Toaster } from "react-hot-toast";
 import PostDetail from "@pages/post/PostDetail.jsx";
 import PostEdit from "@pages/post/PostEdit";
+import EditProfile from "@pages/account/EditProfile";
+import EditPassword from "@pages/account/EditPassword";
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
         <Route path="/postlist" element={<PostList />} />
         <Route path="/postdetail" element={<PostDetail />} />
         <Route path="/postedit" element={<PostEdit />} />
+        <Route path="/editprofile" element={<EditProfile />} />
+        <Route path="/editpassword" element={<EditPassword />} />
       </Routes>
     </>
   );
