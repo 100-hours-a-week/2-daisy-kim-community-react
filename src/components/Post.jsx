@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 export default function Post({
@@ -10,6 +11,8 @@ export default function Post({
   viewCount,
   commentCount,
 }) {
+  const navigate = useNavigate();
+
   return (
     <Container>
       <PostTitle>{title}</PostTitle>
@@ -20,7 +23,7 @@ export default function Post({
           <CreatedDate>{date}</CreatedDate>
         </PostAuthorInfo>
         <ButtonContainer>
-          <EditButton>수정</EditButton>
+          <EditButton onClick={() => navigate("/postedit")}>수정</EditButton>
           <DeleteButton>삭제</DeleteButton>
         </ButtonContainer>
       </PostAuthorSection>
