@@ -9,11 +9,13 @@ export default function Header() {
   const navigate = useNavigate();
 
   const toggleDropdown = () => {
-    setIsDropdownOpen((prev) => !prev);
+    if (location.pathname !== "/" && location.pathname !== "/signup") {
+      setIsDropdownOpen((prev) => !prev);
+    }
   };
 
   const handleBackNavigation = () => {
-    if (location.pathname !== "/login" && location.pathname !== "/signup") {
+    if (location.pathname !== "/" && location.pathname !== "/signup") {
       navigate(-1);
     }
   };
