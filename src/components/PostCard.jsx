@@ -9,9 +9,10 @@ export default function PostCard({
   date,
   profileImage,
   author,
+  onClick,
 }) {
   return (
-    <Container>
+    <Container onClick={onClick}>
       <Title>{title}</Title>
 
       <InfoSection>
@@ -39,6 +40,7 @@ const Container = styled.div`
   padding: 10px;
   box-sizing: border-box;
   margin-bottom: 10px;
+  cursor: pointer;
 `;
 
 const Title = styled.p`

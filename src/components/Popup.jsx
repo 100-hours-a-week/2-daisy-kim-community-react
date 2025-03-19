@@ -1,16 +1,13 @@
 import styled from "styled-components";
 
-export default function Popup({ onCancel, onAccept, onClose }) {
-  const titleText = "게시글을 삭제하시겠습니까?";
-  const subtitleText = "삭제한 내용은 복구할 수 없습니다.";
-
+export default function Popup({ titleText, subtitleText, onAccept, onClose }) {
   return (
     <DimBackground onClick={onClose}>
       <Container onClick={(e) => e.stopPropagation()}>
         <TiteText>{titleText}</TiteText>
         <SubTitleText>{subtitleText}</SubTitleText>
         <ButtonWrapper>
-          <CancelButton onClick={onCancel}>취소</CancelButton>
+          <CancelButton onClick={onClose}>취소</CancelButton>
           <AcceptButton onClick={onAccept}>확인</AcceptButton>
         </ButtonWrapper>
       </Container>

@@ -1,6 +1,25 @@
+import { useState } from "react";
+import toast from "react-hot-toast";
 import styled from "styled-components";
+import Popup from "./Popup";
 
 export default function Comment({ profileImage, author, date, content }) {
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  function handleAcceptPopup() {
+    toast.success("댓글이 삭제되었습니다!");
+    setIsPopupOpen(false);
+  }
+
+  function handlePopupClose() {
+    toast.error("삭제가 취소되었습니다.");
+    setIsPopupOpen(false);
+  }
+
+  function openDeletePopup() {
+    setIsPopupOpen(true);
+  }
+
   return (
     <CommentContainer>
       <CommentHeader>
@@ -11,10 +30,20 @@ export default function Comment({ profileImage, author, date, content }) {
         </CommentAuthorInfo>
         <CommentButtonWrapper>
           <CommentEditButton>수정</CommentEditButton>
-          <CommentDeleteButton>삭제</CommentDeleteButton>
+          <CommentDeleteButton onClick={() => openDeletePopup()}>
+            삭제
+          </CommentDeleteButton>
         </CommentButtonWrapper>
       </CommentHeader>
       <CommentContent>{content}</CommentContent>
+      {isPopupOpen && (
+        <Popup
+          titleText={"댓글을 삭제하시겠습니까?"}
+          subtitleText={"삭제한 내용은 복구할 수 없습니다"}
+          onAccept={handleAcceptPopup}
+          onClose={handlePopupClose}
+        />
+      )}
     </CommentContainer>
   );
 }

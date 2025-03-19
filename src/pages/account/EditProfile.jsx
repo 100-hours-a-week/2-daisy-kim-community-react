@@ -1,9 +1,14 @@
 import { useRef, useState } from "react";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 export default function EditProfile() {
   const fileInputRef = useRef(null);
   const [profileImage, setProfileImage] = useState(null);
+  const [nickname, setNickname] = useState("닉네임");
+  const [isEditing, setIsEditing] = useState(false);
+  const navigate = useNavigate();
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -13,6 +18,11 @@ export default function EditProfile() {
     }
   };
 
+  function handleCompleteEdit() {
+    setIsEditing(false);
+    toast.success("수정이 저장되었습니다.");
+  }
+
   return (
     <Container>
       <Wrapper>
@@ -20,7 +30,10 @@ export default function EditProfile() {
         <UserInfoWrapper>
           <SubTitle>프로필 사진 *</SubTitle>
           <ProfileImageWrapper src={profileImage} $bgImage={profileImage}>
-            <ProfileOverlay onClick={() => fileInputRef.current.click()}>
+            <ProfileOverlay
+              onClick={() => isEditing && fileInputRef.current.click()}
+              $disabled={!isEditing}
+            >
               <ChangeProfileButton>변경</ChangeProfileButton>
             </ProfileOverlay>
           </ProfileImageWrapper>
@@ -33,11 +46,35 @@ export default function EditProfile() {
           <SubTitle>이메일</SubTitle>
           <Content>test@naver.com</Content>
           <SubTitle>닉네임</SubTitle>
-          <NicknameInput placeholder="nickname"></NicknameInput>
+          <NicknameInput
+            placeholder={nickname}
+            onChange={(e) => isEditing && setNickname(e.target.value)}
+          ></NicknameInput>
         </UserInfoWrapper>
-        <EditButton>수정하기</EditButton>
-        <DeleteButton>회원 탈퇴</DeleteButton>
-        <SaveChangesButton>수정 완료</SaveChangesButton>
+        <EditButton
+          onClick={() => {
+            setIsEditing(true);
+            toast.success("수정을 시작합니다.");
+          }}
+        >
+          수정하기
+        </EditButton>
+        <DeleteButton
+          onClick={() => {
+            toast.error("탈퇴가 완료되었습니다.");
+            navigate("/");
+          }}
+        >
+          회원 탈퇴
+        </DeleteButton>
+        <SaveChangesButton
+          onClick={() => {
+            handleCompleteEdit();
+          }}
+          disabled={!isEditing}
+        >
+          저장하기
+        </SaveChangesButton>
       </Wrapper>
     </Container>
   );
@@ -173,4 +210,5 @@ const SaveChangesButton = styled.button`
   font-weight: 700;
   border-radius: 20px;
   margin-top: 80px;
+  cursor: pointer;
 `;

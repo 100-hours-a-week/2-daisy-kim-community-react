@@ -1,4 +1,5 @@
 import { useAuthForm } from "@hooks/useAuthForm";
+import toast from "react-hot-toast";
 import styled from "styled-components";
 
 export default function EditPassword() {
@@ -34,7 +35,9 @@ export default function EditPassword() {
         />
         {confirmPasswordError && <ErrorText>{confirmPasswordError}</ErrorText>}
 
-        <EditButton>수정하기</EditButton>
+        <EditButton onClick={() => toast.success("수정이 완료되었습니다.")}>
+          수정하기
+        </EditButton>
       </Wrapper>
     </Container>
   );

@@ -18,7 +18,9 @@ export default function PostList() {
         </WriteButton>
         {postListDummy.map((post) => (
           <PostCard
-            onClick={() => navigate(`/postdetail/${post.id}`)}
+            onClick={() => {
+              navigate(`/postdetail/1`);
+            }}
             key={post.id}
             title={post.title}
             likes={post.likes}

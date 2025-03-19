@@ -4,6 +4,7 @@ import Comment from "@components/Comment";
 import { postDummy } from "@data/PostDummy";
 import Post from "@components/Post";
 import { useParams } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export default function PostDetail() {
   const { id } = useParams();
@@ -26,7 +27,11 @@ export default function PostDetail() {
         <WriteCommentSection>
           <WriteCommentBox placeholder="댓글을 남겨주세요!" />
           <WriteButtonWrapper>
-            <WriteButton>댓글 등록</WriteButton>
+            <WriteButton
+              onClick={() => toast.success("댓글이 등록되었습니다.")}
+            >
+              댓글 등록
+            </WriteButton>
           </WriteButtonWrapper>
         </WriteCommentSection>
 
