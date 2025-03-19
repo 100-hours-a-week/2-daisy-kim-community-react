@@ -1,8 +1,11 @@
 import styled from "styled-components";
 import PostCard from "@components/PostCard";
 import { postListDummy } from "@data/postListDummy";
+import { useNavigate } from "react-router-dom";
 
 export default function PostList() {
+  const navigate = useNavigate();
+
   return (
     <Container>
       <Wrapper>
@@ -10,9 +13,12 @@ export default function PostList() {
           안녕하세요, <br />
           아무 말 대잔치 <b>게시판</b>입니다.
         </TitleText>
-        <WriteButton>게시글 작성</WriteButton>
+        <WriteButton onClick={() => navigate("/postwrite")}>
+          게시글 작성
+        </WriteButton>
         {postListDummy.map((post) => (
           <PostCard
+            onClick={() => navigate(`/postdetail/${post.id}`)}
             key={post.id}
             title={post.title}
             likes={post.likes}

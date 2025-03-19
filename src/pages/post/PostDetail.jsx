@@ -3,24 +3,26 @@ import { commentDummy } from "@data/CommentDummy.js";
 import Comment from "@components/Comment";
 import { postDummy } from "@data/PostDummy";
 import Post from "@components/Post";
+import { useParams } from "react-router-dom";
 
 export default function PostDetail() {
+  const { id } = useParams();
+  const post = postDummy.find((post) => post.id === Number(id));
+
   return (
     <Container>
       <Wrapper>
-        {postDummy.map((post) => (
-          <Post
-            key={post.id}
-            title={post.title}
-            profileImage={post.profileImage}
-            author={post.author}
-            date={post.date}
-            content={post.content}
-            likeCount={post.likeCount}
-            viewCount={post.viewCount}
-            commentCount={post.commentCount}
-          />
-        ))}
+        <Post
+          key={post.id}
+          title={post.title}
+          profileImage={post.profileImage}
+          author={post.author}
+          date={post.date}
+          content={post.content}
+          likeCount={post.likeCount}
+          viewCount={post.viewCount}
+          commentCount={post.commentCount}
+        />
         <WriteCommentSection>
           <WriteCommentBox placeholder="댓글을 남겨주세요!" />
           <WriteButtonWrapper>

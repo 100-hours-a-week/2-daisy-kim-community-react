@@ -8,6 +8,7 @@ import PostDetail from "@pages/post/PostDetail.jsx";
 import PostEdit from "@pages/post/PostEdit";
 import EditProfile from "@pages/account/EditProfile";
 import EditPassword from "@pages/account/EditPassword";
+import PostWrite from "@pages/post/PostWrite";
 
 function App() {
   return (
@@ -18,10 +19,11 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/postlist" element={<PostList />} />
-        <Route path="/postdetail" element={<PostDetail />} />
+        <Route path="/postdetail/:id" element={<PostDetail />} />
         <Route path="/postedit" element={<PostEdit />} />
         <Route path="/editprofile" element={<EditProfile />} />
         <Route path="/editpassword" element={<EditPassword />} />
+        <Route path="/postwrite" element={<PostWrite />} />
       </Routes>
     </>
   );

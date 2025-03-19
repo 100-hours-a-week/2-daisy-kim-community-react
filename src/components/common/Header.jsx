@@ -38,9 +38,7 @@ export default function Header() {
             <DropdownItem onClick={() => navigate("/editpassword")}>
               비밀번호 수정
             </DropdownItem>
-            <DropdownItem onClick={() => navigate("/login")}>
-              로그아웃
-            </DropdownItem>
+            <DropdownItem onClick={() => navigate("/")}>로그아웃</DropdownItem>
           </DropdownMenu>
         )}
       </UserIconWrapper>
