@@ -1,24 +1,17 @@
-import { useState } from "react";
-import toast from "react-hot-toast";
 import styled from "styled-components";
-import Popup from "./Popup";
+import Popup from "@components/Popup";
+import { useDeletePopup } from "@hooks/useDeletePopup";
 
 export default function Comment({ profileImage, author, date, content }) {
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-
-  function handleAcceptPopup() {
-    toast.success("댓글이 삭제되었습니다!");
-    setIsPopupOpen(false);
-  }
-
-  function handlePopupClose() {
-    toast.error("삭제가 취소되었습니다.");
-    setIsPopupOpen(false);
-  }
-
-  function openDeletePopup() {
-    setIsPopupOpen(true);
-  }
+  const {
+    isOpen: isPopupOpen,
+    openPopup: openDeletePopup,
+    handleAccept: handleAcceptPopup,
+    handleClose: handlePopupClose,
+  } = useDeletePopup({
+    successMessage: "댓글이 취소되었습니다.",
+    cancelMessage: "삭제가 취소되었습니다.",
+  });
 
   return (
     <CommentContainer>

@@ -1,8 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import Popup from "./Popup";
-import toast from "react-hot-toast";
-import { useState } from "react";
+import Popup from "@components/Popup";
+import { useDeletePopup } from "@hooks/useDeletePopup";
 
 export default function Post({
   title,
@@ -15,21 +14,15 @@ export default function Post({
   commentCount,
 }) {
   const navigate = useNavigate();
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-
-  function handleAcceptPopup() {
-    toast.success("게시글이 삭제되었습니다!");
-    setIsPopupOpen(false);
-  }
-
-  function handlePopupClose() {
-    toast.error("삭제가 취소되었습니다.");
-    setIsPopupOpen(false);
-  }
-
-  function openDeletePopup() {
-    setIsPopupOpen(true);
-  }
+  const {
+    isOpen: isPopupOpen,
+    openPopup: openDeletePopup,
+    handleAccept: handleAcceptPopup,
+    handleClose: handlePopupClose,
+  } = useDeletePopup({
+    successMessage: "게시글이 취소되었습니다.",
+    cancelMessage: "삭제가 취소되었습니다.",
+  });
 
   return (
     <Container>
