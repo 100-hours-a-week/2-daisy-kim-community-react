@@ -20,7 +20,7 @@ export default function Post({
     handleAccept: handleAcceptPopup,
     handleClose: handlePopupClose,
   } = useDeletePopup({
-    successMessage: "게시글이 취소되었습니다.",
+    successMessage: "게시글이 삭제되었습니다.",
     cancelMessage: "삭제가 취소되었습니다.",
   });
 
