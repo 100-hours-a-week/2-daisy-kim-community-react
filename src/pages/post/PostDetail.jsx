@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { commentDummy } from "@data/CommentDummy.js";
 import Comment from "@components/comment/Comment";
 import { postDummy } from "@data/PostDummy";
-import Post from "@components/Post";
+import Post from "@components/post/Post";
 import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 

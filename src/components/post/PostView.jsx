@@ -1,9 +1,6 @@
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import Popup from "@components/Popup";
-import { useDeletePopup } from "@hooks/useDeletePopup";
 
-export default function Post({
+export default function PostView({
   title,
   profileImage,
   author,
@@ -12,18 +9,9 @@ export default function Post({
   likeCount,
   viewCount,
   commentCount,
+  onEdit,
+  onDelete,
 }) {
-  const navigate = useNavigate();
-  const {
-    isOpen: isPopupOpen,
-    openPopup: openDeletePopup,
-    handleAccept: handleAcceptPopup,
-    handleClose: handlePopupClose,
-  } = useDeletePopup({
-    successMessage: "게시글이 삭제되었습니다.",
-    cancelMessage: "삭제가 취소되었습니다.",
-  });
-
   return (
     <Container>
       <PostTitle>{title}</PostTitle>
@@ -34,8 +22,8 @@ export default function Post({
           <CreatedDate>{date}</CreatedDate>
         </PostAuthorInfo>
         <ButtonContainer>
-          <EditButton onClick={() => navigate("/postedit")}>수정</EditButton>
-          <DeleteButton onClick={() => openDeletePopup()}>삭제</DeleteButton>
+          <EditButton onClick={() => onEdit()}>수정</EditButton>
+          <DeleteButton onClick={() => onDelete()}>삭제</DeleteButton>
         </ButtonContainer>
       </PostAuthorSection>
       <PostContentSection>
@@ -55,15 +43,6 @@ export default function Post({
           {commentCount} <span>댓글</span>
         </StatBox>
       </PostStatsSection>
-
-      {isPopupOpen && (
-        <Popup
-          titleText={"게시글을 삭제하시겠습니까?"}
-          subtitleText={"삭제한 내용은 복구할 수 없습니다."}
-          onAccept={handleAcceptPopup}
-          onClose={handlePopupClose}
-        />
-      )}
     </Container>
   );
 }
