@@ -22,8 +22,10 @@ export const validatePassword = (password) => {
   return "";
 };
 
+const isPasswordMatch = (confirm, original) => confirm === original;
+
 export const validateConfirmPassword = (newConfirmPassword, password) => {
-  return newConfirmPassword === password
+  return isPasswordMatch(newConfirmPassword, password)
     ? ""
     : "* 비밀번호가 일치하지 않습니다.";
 };
