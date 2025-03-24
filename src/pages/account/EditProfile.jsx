@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -8,15 +8,29 @@ export default function EditProfile() {
   const [profileImage, setProfileImage] = useState(null);
   const [nickname, setNickname] = useState("닉네임");
   const [isEditing, setIsEditing] = useState(false);
+  const [objectUrl, setObjectUrl] = useState(null);
   const navigate = useNavigate();
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
+      if (objectUrl) {
+        URL.revokeObjectURL(objectUrl);
+      }
+
       const imageUrl = URL.createObjectURL(file);
       setProfileImage(imageUrl);
+      setObjectUrl(objectUrl);
     }
   };
+
+  useEffect(() => {
+    return () => {
+      if (objectUrl) {
+        URL.revokeObjectURL(objectUrl);
+      }
+    };
+  }, [objectUrl]);
 
   function handleCompleteEdit() {
     setIsEditing(false);

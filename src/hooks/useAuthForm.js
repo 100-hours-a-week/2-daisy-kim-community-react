@@ -25,10 +25,26 @@ export const useAuthForm = (formType, navigate) => {
     }
   }, [isAuthenticated, formType, navigate]);
 
+  const [objectUrl, setObjectUrl] = useState(null);
+
+  useEffect(() => {
+    return () => {
+      if (objectUrl) {
+        URL.revokeObjectURL(objectUrl);
+      }
+    };
+  }, [objectUrl]);
+
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setProfileImage(URL.createObjectURL(file));
+      if (objectUrl) {
+        URL.rebokeObjectURL(objectUrl);
+      }
+
+      const newUrl = URL.createObjectURL(file);
+      setProfileImage(newUrl);
+      setObjectUrl(newUrl);
     }
   };
 
