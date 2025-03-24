@@ -1,10 +1,11 @@
+import React from "react";
 import styled from "styled-components";
 
-export default function Popup({ titleText, subtitleText, onAccept, onClose }) {
+function Popup({ titleText, subtitleText, onAccept, onClose }) {
   return (
     <DimBackground onClick={onClose}>
       <Container onClick={(e) => e.stopPropagation()}>
-        <TiteText>{titleText}</TiteText>
+        <TitleText>{titleText}</TitleText>
         <SubTitleText>{subtitleText}</SubTitleText>
         <ButtonWrapper>
           <CancelButton onClick={onClose}>취소</CancelButton>
@@ -14,6 +15,8 @@ export default function Popup({ titleText, subtitleText, onAccept, onClose }) {
     </DimBackground>
   );
 }
+
+export default React.memo(Popup);
 
 const DimBackground = styled.div`
   position: fixed;
@@ -40,7 +43,7 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const TiteText = styled.p`
+const TitleText = styled.p`
   font-size: 16px;
   font-weight: 700;
   margin: 0;
