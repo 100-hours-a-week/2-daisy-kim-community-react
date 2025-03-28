@@ -1,51 +1,71 @@
 import styled from "styled-components";
 import { commentDummy } from "@data/CommentDummy.js";
 import Comment from "@components/comment/Comment";
-import { postDummy } from "@data/PostDummy";
 import Post from "@components/post/Post";
 import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
+import { getPostDetail } from "@api/postApi";
+import { useEffect, useState } from "react";
 
 export default function PostDetail() {
   const { id } = useParams();
-  const post = postDummy.find((post) => post.id === Number(id));
+  const [post, setPost] = useState(null);
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const res = await getPostDetail(id);
+        setPost(res.data[0]);
+      } catch (error) {
+        console.error("게시글 상세 조회 실패: ", error);
+        toast.error("게시글 정보를 불러오지 못했습니다.");
+      }
+    };
+    fetchPost();
+  }, [id]);
 
   return (
     <Container>
       <Wrapper>
-        <Post
-          key={post.id}
-          title={post.title}
-          profileImage={post.profileImage}
-          author={post.author}
-          date={post.date}
-          content={post.content}
-          likeCount={post.likeCount}
-          viewCount={post.viewCount}
-          commentCount={post.commentCount}
-        />
-        <WriteCommentSection>
-          <WriteCommentBox placeholder="댓글을 남겨주세요!" />
-          <WriteButtonWrapper>
-            <WriteButton
-              onClick={() => toast.success("댓글이 등록되었습니다.")}
-            >
-              댓글 등록
-            </WriteButton>
-          </WriteButtonWrapper>
-        </WriteCommentSection>
-
-        <CommentSection>
-          {commentDummy.map((comment) => (
-            <Comment
-              key={comment.id}
-              profileImage={comment.profileImage}
-              author={comment.author}
-              date={comment.date}
-              content={comment.content}
+        {post ? (
+          <>
+            <Post
+              key={post.post_id}
+              title={post.title}
+              profileImage={post.author.profile_image}
+              author={post.author.nickname}
+              date={post.created_at}
+              content={post.content}
+              likeCount={post.like_count}
+              viewCount={post.view_count}
+              commentCount={post.comment_count}
             />
-          ))}
-        </CommentSection>
+            <WriteCommentSection>
+              <WriteCommentBox placeholder="댓글을 남겨주세요!" />
+              <WriteButtonWrapper>
+                <WriteButton
+                  onClick={() => toast.success("댓글이 등록되었습니다.")}
+                >
+                  댓글 등록
+                </WriteButton>
+              </WriteButtonWrapper>
+            </WriteCommentSection>
+
+            <CommentSection>
+              {commentDummy.map((comment) => (
+                <Comment
+                  key={comment.id}
+                  profileImage={comment.profileImage}
+                  author={comment.author}
+                  date={comment.date}
+                  content={comment.content}
+                />
+              ))}
+            </CommentSection>
+          </>
+        ) : (
+          <p>로딩 중</p>
+        )}
       </Wrapper>
     </Container>
   );

@@ -23,3 +23,13 @@ export const postCreatePost = async (data) => {
     throw error.response?.data || error;
   }
 };
+
+export const getPostDetail = async (postId) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/posts/${postId}`);
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
