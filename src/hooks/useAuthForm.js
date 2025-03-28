@@ -5,6 +5,8 @@ import {
   validateEmail,
   validatePassword,
 } from "@utils/validators";
+import { postSignup } from "@api/auth";
+import defaultProfileImage from "@assets/default-profile.jpeg";
 
 export const useAuthForm = (formType, navigate) => {
   const [email, setEmail] = useState("");
@@ -75,24 +77,33 @@ export const useAuthForm = (formType, navigate) => {
     setNickname(e.target.value);
   };
 
-  const handleSignup = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
 
-    if (!emailError && !passwordError && !confirmPasswordError) {
+    try {
+      const payload = {
+        email,
+        password,
+        nickname,
+        profile_image_url: profileImage || defaultProfileImage,
+      };
+      const res = await postSignup(payload);
+      console.log("회원가입 응답:", res);
+
       toast.success("회원가입 성공!");
       setIsAuthenticated(true);
+    } catch (error) {
+      console.error("회원가입 실패: ", error);
+      toast.error("회원가입에 실패했습니다.");
     }
   };
 
   const handleLogin = (e) => {
     e.preventDefault();
 
-    const isValidUser = email === "test@naver.com" && password === "Test1234!";
-    if (!isValidUser) {
-      toast.error("아이디 또는 비밀번호를 확인해주세요");
-    } else {
-      toast.success("로그인 성공!");
-      setIsAuthenticated(true);
+    if (emailError || passwordError || confirmPasswordError) {
+      toast.error("입력값을 확인해주세요.");
+      return;
     }
   };
 
