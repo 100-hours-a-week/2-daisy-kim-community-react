@@ -5,7 +5,7 @@ import {
   validateEmail,
   validatePassword,
 } from "@utils/validators";
-import { postSignup } from "@api/auth";
+import { postSignup, postLogin } from "@api/auth";
 import defaultProfileImage from "@assets/default-profile.jpeg";
 
 export const useAuthForm = (formType, navigate) => {
@@ -80,6 +80,11 @@ export const useAuthForm = (formType, navigate) => {
   const handleSignup = async (e) => {
     e.preventDefault();
 
+    if (emailError || passwordError || confirmPasswordError) {
+      toast.error("입력값을 확인해주세요.");
+      return;
+    }
+
     try {
       const payload = {
         email,
@@ -98,12 +103,29 @@ export const useAuthForm = (formType, navigate) => {
     }
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
     if (emailError || passwordError || confirmPasswordError) {
       toast.error("입력값을 확인해주세요.");
       return;
+    }
+
+    try {
+      const payload = {
+        email,
+        password,
+      };
+      console.log("로그인 payload: ", payload);
+
+      const res = await postLogin(payload);
+      console.log("로그인 응답:", res);
+
+      toast.success("로그인 성공!");
+      setIsAuthenticated(true);
+    } catch (error) {
+      console.error("로그인 실패: ", error);
+      toast.error("아이디 또는 비밀번호가 올바르지 않습니다.");
     }
   };
 
