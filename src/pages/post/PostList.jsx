@@ -1,10 +1,25 @@
 import styled from "styled-components";
 import PostCard from "@components/PostCard";
-import { postListDummy } from "@data/postListDummy";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { getPostList } from "@api/postApi";
 
 export default function PostList() {
   const navigate = useNavigate();
+  const [postList, setPostList] = useState([]);
+
+  useEffect(() => {
+    const getPosts = async () => {
+      try {
+        const res = await getPostList();
+        setPostList(res.data);
+      } catch (error) {
+        console.error("게시글 목록 불러오기 실패: ", error);
+      }
+    };
+
+    getPosts();
+  }, []);
 
   return (
     <Container>
@@ -16,19 +31,19 @@ export default function PostList() {
         <WriteButton onClick={() => navigate("/postwrite")}>
           게시글 작성
         </WriteButton>
-        {postListDummy.map((post) => (
+        {postList.map((post) => (
           <PostCard
             onClick={() => {
-              navigate(`/postdetail/1`);
+              navigate(`/postdetail/${post.postId}`);
             }}
-            key={post.id}
+            key={post.postId}
             title={post.title}
-            likes={post.likes}
-            comments={post.comments}
-            views={post.views}
-            date={post.date}
-            profileImage={post.profileImage}
-            author={post.author}
+            likes={post.likeCount}
+            comments={post.commentCount}
+            views={post.viewCount}
+            date={post.createdAt}
+            profileImage={post.author.profileImage}
+            author={post.author.nickname}
           />
         ))}
       </Wrapper>

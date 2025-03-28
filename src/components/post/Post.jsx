@@ -1,6 +1,7 @@
 import Popup from "@components/Popup";
 import { useDeletePopup } from "@hooks/useDeletePopup";
 import { useNavigate } from "react-router-dom";
+import PostView from "@components/post/PostView";
 
 export default function Post(props) {
   const navigate = useNavigate();

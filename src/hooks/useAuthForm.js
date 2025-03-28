@@ -5,7 +5,7 @@ import {
   validateEmail,
   validatePassword,
 } from "@utils/validators";
-import { postSignup, postLogin } from "@api/auth";
+import { postSignup, postLogin } from "@api/authApi";
 import defaultProfileImage from "@assets/default-profile.jpeg";
 
 export const useAuthForm = (formType, navigate) => {
