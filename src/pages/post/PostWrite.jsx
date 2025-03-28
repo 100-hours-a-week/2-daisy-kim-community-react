@@ -1,8 +1,49 @@
+import { postCreatePost } from "@api/postApi";
+import { useState } from "react";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 export default function PostWrite() {
   const navigate = useNavigate();
+
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const url = URL.createObjectURL(file);
+      setImageUrl(url);
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (!title || !content) {
+      toast.error("제목과 내용을 모두 입력해주세요.");
+      return;
+    }
+
+    const userId = localStorage.getItem("userId");
+
+    try {
+      const payload = {
+        userId: Number(userId),
+        title,
+        content,
+        postImage: imageUrl || null,
+      };
+
+      const response = await postCreatePost(payload);
+      console.log("게시글 생성: ", response);
+      toast.success("게시글이 작성되었습니다!");
+      navigate("/postlist");
+    } catch (error) {
+      console.error("게시글 작성: ", error);
+      toast.error("게시글 작성을 실패했습니다.");
+    }
+  };
 
   return (
     <Container>
@@ -10,13 +51,27 @@ export default function PostWrite() {
         <EditTitle>게시글 작성</EditTitle>
         <EditContainer>
           <EditSubTitle>제목 *</EditSubTitle>
-          <TitleInput placeholder="제목을 입력해주세요 (최대 26글자)" />
+          <TitleInput
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="제목을 입력해주세요 (최대 26글자)"
+          />
           <EditSubTitle>내용 *</EditSubTitle>
-          <ContentInput placeholder="내용을 입력해주세요" />
+          <ContentInput
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            placeholder="내용을 입력해주세요"
+          />
           <EditSubTitle>이미지 *</EditSubTitle>
-          <EditFileInput type="file" id="fileUpload" />
+          <EditFileInput
+            type="file"
+            onChange={handleImageUpload}
+            id="fileUpload"
+          />
         </EditContainer>
-        <EditButton onClick={() => navigate("/postlist")}>완료</EditButton>
+        <EditButton type="button" onClick={handleSubmit}>
+          완료
+        </EditButton>
       </Wrapper>
     </Container>
   );
