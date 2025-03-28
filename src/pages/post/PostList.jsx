@@ -12,6 +12,7 @@ export default function PostList() {
     const getPosts = async () => {
       try {
         const res = await getPostList();
+        console.log(res);
         setPostList(res.data);
       } catch (error) {
         console.error("게시글 목록 불러오기 실패: ", error);

@@ -92,8 +92,13 @@ export const useAuthForm = (formType, navigate) => {
         nickname,
         profile_image_url: profileImage || defaultProfileImage,
       };
+
       const res = await postSignup(payload);
       console.log("회원가입 응답:", res);
+
+      if (res?.userId) {
+        localStorage.setItem("userId", res.userId);
+      }
 
       toast.success("회원가입 성공!");
       setIsAuthenticated(true);
