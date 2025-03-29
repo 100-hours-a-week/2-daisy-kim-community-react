@@ -39,9 +39,9 @@ export default function PostList() {
             }}
             key={post.postId}
             title={post.title}
-            likes={post.likeCount}
-            comments={post.commentCount}
-            views={post.viewCount}
+            likes={post.likeCount ?? 0}
+            comments={post.commentCount ?? 0}
+            views={post.viewCount ?? 0}
             date={post.createdAt}
             profileImage={post.author.profileImage}
             author={post.author.nickname}

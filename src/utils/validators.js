@@ -32,7 +32,9 @@ export const validateConfirmPassword = (newConfirmPassword, password) => {
 
 // 숫자 단위 변환 함수 100,000 → 100k
 export const formatNumber = (num) => {
-  if (num >= 100000) {
+  if (num === 0) {
+    return "0";
+  } else if (num >= 100000) {
     return `${Math.floor(num / 1000)}k`;
   } else if (num >= 10000) {
     return `${Math.floor(num / 1000)}k`;

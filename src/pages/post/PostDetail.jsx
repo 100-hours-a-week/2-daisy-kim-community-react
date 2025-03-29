@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import { getPostDetail } from "@api/postApi";
 import { useEffect, useState } from "react";
+import defaultProfileImage from "@assets/default-profile.jpeg";
 
 export default function PostDetail() {
   const { id } = useParams();
@@ -15,6 +16,7 @@ export default function PostDetail() {
     const fetchPost = async () => {
       try {
         const res = await getPostDetail(id);
+        console.log("상세페이지", res);
         setPost(res.data[0]);
       } catch (error) {
         console.error("게시글 상세 조회 실패: ", error);
@@ -32,7 +34,7 @@ export default function PostDetail() {
             <Post
               key={post.post_id}
               title={post.title}
-              profileImage={post.author.profile_image}
+              profileImage={post.author.profile_image ?? defaultProfileImage}
               author={post.author.nickname}
               date={post.created_at}
               content={post.content}

@@ -1,6 +1,7 @@
 import Popup from "@components/Popup";
 import { useDeletePopup } from "@hooks/useDeletePopup";
 import CommentView from "./CommentView";
+import defaultProfileImage from "@assets/default-profile.jpeg";
 
 export default function Comment({ profileImage, author, date, content }) {
   const { isOpen, openPopup, handleAccept, handleClose } = useDeletePopup({
@@ -11,7 +12,7 @@ export default function Comment({ profileImage, author, date, content }) {
   return (
     <>
       <CommentView
-        profileImage={profileImage}
+        profileImage={profileImage ?? defaultProfileImage}
         author={author}
         date={date}
         content={content}

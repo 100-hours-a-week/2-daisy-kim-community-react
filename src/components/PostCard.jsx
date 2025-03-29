@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { formatNumber } from "@utils/validators";
+import defaultProfileImage from "@assets/default-profile.jpeg";
 
 export default function PostCard({
   title,
@@ -14,17 +15,18 @@ export default function PostCard({
   return (
     <Container onClick={onClick}>
       <Title>{title}</Title>
-
       <InfoSection>
         <InfoText>
-          좋아요 {formatNumber(likes)} 댓글 {formatNumber(comments)} 조회수{" "}
-          {formatNumber(views)}
+          좋아요 {likes === 0 ? "0" : formatNumber(likes)} 댓글{" "}
+          {formatNumber(comments)} 조회수 {formatNumber(views)}
         </InfoText>
         <CreatedDate>{date}</CreatedDate>
       </InfoSection>
-
       <AuthorSection>
-        <ProfileImage src={profileImage} />
+        <ProfileImage
+          src={profileImage ?? defaultProfileImage}
+          alt="프로필 이미지"
+        />
         <AuthorName>{author}</AuthorName>
       </AuthorSection>
     </Container>
@@ -77,7 +79,7 @@ const AuthorSection = styled.div`
   border-top: 1px solid lightgray;
 `;
 
-const ProfileImage = styled.div`
+const ProfileImage = styled.img`
   width: 30px;
   height: 30px;
   border-radius: 50%;

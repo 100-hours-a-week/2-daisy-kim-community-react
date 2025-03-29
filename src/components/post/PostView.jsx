@@ -33,14 +33,16 @@ export default function PostView({
 
       <PostStatsSection>
         <StatBox>
-          {likeCount}
           <span>좋아요</span>
+          {likeCount ?? 0}
         </StatBox>
         <StatBox>
-          {viewCount} <span>조회수</span>
+          <span>조회수</span>
+          {viewCount ?? 0}
         </StatBox>
         <StatBox>
-          {commentCount} <span>댓글</span>
+          <span>댓글</span>
+          {commentCount ?? 0}
         </StatBox>
       </PostStatsSection>
     </Container>
