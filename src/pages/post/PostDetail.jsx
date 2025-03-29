@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { commentDummy } from "@data/CommentDummy.js";
 import Comment from "@components/comment/Comment";
 import Post from "@components/post/Post";
 import { useParams } from "react-router-dom";
@@ -7,12 +6,13 @@ import toast from "react-hot-toast";
 import { getPostDetail } from "@api/postApi";
 import { useEffect, useState } from "react";
 import defaultProfileImage from "@assets/default-profile.jpeg";
-import { postCreateComment } from "@api/commentApi";
+import { postCreateComment, getCommentList } from "@api/commentApi";
 
 export default function PostDetail() {
   const { id } = useParams();
   const [post, setPost] = useState(null);
   const [comment, setComment] = useState("");
+  const [commentList, setCommentList] = useState([]);
 
   const handleRegisterComment = async () => {
     const userId = localStorage.getItem("userId");
@@ -35,6 +35,9 @@ export default function PostDetail() {
       console.log("댓글 등록 성공", res);
       toast.success("댓글이 등록되었습니다.");
       setComment("");
+
+      const updatedComments = await getCommentList(id);
+      setCommentList(updatedComments.data);
     } catch (error) {
       console.error("댓글 등록 실패", error);
       toast.error("댓글 등록 중 오류가 발생했습니다.");
@@ -42,6 +45,8 @@ export default function PostDetail() {
   };
 
   useEffect(() => {
+    if (!id || id === "undefined") return;
+
     const fetchPost = async () => {
       try {
         const res = await getPostDetail(id);
@@ -53,7 +58,19 @@ export default function PostDetail() {
       }
     };
 
+    const fetchComments = async () => {
+      if (!id || id === "undefined") return;
+
+      try {
+        const res = await getCommentList(id);
+        setCommentList(res.data);
+      } catch (error) {
+        toast.error("댓글 목록을 불러오지 못했습니다.");
+        throw error.response?.data;
+      }
+    };
     fetchPost();
+    fetchComments();
   }, [id]);
 
   return (
@@ -86,12 +103,12 @@ export default function PostDetail() {
             </WriteCommentSection>
 
             <CommentSection>
-              {commentDummy.map((comment) => (
+              {commentList.map((comment) => (
                 <Comment
-                  key={comment.id}
-                  profileImage={comment.profileImage}
-                  author={comment.author}
-                  date={comment.date}
+                  key={comment.commentId}
+                  profileImage={comment.profileImage ?? defaultProfileImage}
+                  author={comment.author.nickname}
+                  date={comment.createdAt}
                   content={comment.content}
                 />
               ))}

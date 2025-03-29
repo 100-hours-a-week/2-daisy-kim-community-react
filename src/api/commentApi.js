@@ -13,3 +13,15 @@ export const postCreateComment = async (postId, data) => {
     throw error.response?.data || error;
   }
 };
+
+export const getCommentList = async (postId, data) => {
+  try {
+    const response = await axios.get(
+      `${BASE_URL}/posts/${postId}/comments`,
+      data
+    );
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};
