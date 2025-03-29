@@ -10,6 +10,7 @@ import {
   postCreateComment,
   getCommentList,
   patchEditComment,
+  deleteComment,
 } from "@api/commentApi";
 
 export default function PostDetail() {
@@ -60,6 +61,28 @@ export default function PostDetail() {
     } catch (error) {
       console.error("댓글 등록 실패", error);
       toast.error("댓글 등록 중 오류가 발생했습니다.");
+    }
+  };
+
+  const handleDeleteComment = async (commentId) => {
+    const userId = localStorage.getItem("userId");
+
+    if (!userId) {
+      toast.error("로그인이 필요합니다.");
+      return;
+    }
+
+    try {
+      await deleteComment(id, commentId, {
+        data: { userId: Number(userId) },
+      });
+      toast.success("댓글이 삭제되었습니다.");
+
+      const updatedComments = await getCommentList(id);
+      setCommentList(updatedComments.data);
+    } catch (error) {
+      console.error("댓글 삭제 실패", error);
+      toast.error("댓글 삭제 중 오류가 발생했습니다.");
     }
   };
 
@@ -133,6 +156,7 @@ export default function PostDetail() {
                     setComment(comment.content);
                     setEditCommentId(comment.commentId);
                   }}
+                  onDelete={() => handleDeleteComment(comment.commentId)}
                 />
               ))}
             </CommentSection>

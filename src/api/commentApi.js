@@ -34,3 +34,15 @@ export const patchEditComment = async (postId, commentId, data) => {
     throw error.response?.data || error;
   }
 };
+
+export const deleteComment = async (postId, commentId, data) => {
+  try {
+    const response = await axios.delete(
+      `${BASE_URL}/posts/${postId}/comments/${commentId}`,
+      data
+    );
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error;
+  }
+};

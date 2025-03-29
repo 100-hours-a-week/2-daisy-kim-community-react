@@ -9,10 +9,12 @@ export default function Comment({
   date,
   content,
   onEdit,
+  onDelete,
 }) {
   const { isOpen, openPopup, handleAccept, handleClose } = useDeletePopup({
     successMessage: "댓글이 삭제되었습니다.",
     cancelMessage: "삭제가 취소되었습니다.",
+    onConfirm: onDelete,
   });
 
   return (
