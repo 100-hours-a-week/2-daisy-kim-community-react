@@ -7,10 +7,39 @@ import toast from "react-hot-toast";
 import { getPostDetail } from "@api/postApi";
 import { useEffect, useState } from "react";
 import defaultProfileImage from "@assets/default-profile.jpeg";
+import { postCreateComment } from "@api/commentApi";
 
 export default function PostDetail() {
   const { id } = useParams();
   const [post, setPost] = useState(null);
+  const [comment, setComment] = useState("");
+
+  const handleRegisterComment = async () => {
+    const userId = localStorage.getItem("userId");
+
+    if (!comment.trim()) {
+      toast.error("댓글을 입력해주세요.");
+      return;
+    }
+
+    if (!userId) {
+      toast.error("로그인이 필요합니다.");
+      return;
+    }
+
+    try {
+      const res = await postCreateComment(id, {
+        content: comment,
+        userId: Number(userId),
+      });
+      console.log("댓글 등록 성공", res);
+      toast.success("댓글이 등록되었습니다.");
+      setComment("");
+    } catch (error) {
+      console.error("댓글 등록 실패", error);
+      toast.error("댓글 등록 중 오류가 발생했습니다.");
+    }
+  };
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -23,6 +52,7 @@ export default function PostDetail() {
         toast.error("게시글 정보를 불러오지 못했습니다.");
       }
     };
+
     fetchPost();
   }, [id]);
 
@@ -43,11 +73,13 @@ export default function PostDetail() {
               commentCount={post.comment_count}
             />
             <WriteCommentSection>
-              <WriteCommentBox placeholder="댓글을 남겨주세요!" />
+              <WriteCommentBox
+                placeholder="댓글을 남겨주세요!"
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+              />
               <WriteButtonWrapper>
-                <WriteButton
-                  onClick={() => toast.success("댓글이 등록되었습니다.")}
-                >
+                <WriteButton onClick={handleRegisterComment}>
                   댓글 등록
                 </WriteButton>
               </WriteButtonWrapper>
