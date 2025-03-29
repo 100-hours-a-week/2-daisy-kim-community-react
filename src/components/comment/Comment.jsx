@@ -3,7 +3,13 @@ import { useDeletePopup } from "@hooks/useDeletePopup";
 import CommentView from "./CommentView";
 import defaultProfileImage from "@assets/default-profile.jpeg";
 
-export default function Comment({ profileImage, author, date, content }) {
+export default function Comment({
+  profileImage,
+  author,
+  date,
+  content,
+  onEdit,
+}) {
   const { isOpen, openPopup, handleAccept, handleClose } = useDeletePopup({
     successMessage: "댓글이 삭제되었습니다.",
     cancelMessage: "삭제가 취소되었습니다.",
@@ -16,7 +22,7 @@ export default function Comment({ profileImage, author, date, content }) {
         author={author}
         date={date}
         content={content}
-        onEdit={() => console.log("")} // 수정 시 받아온 댓글 작성창으로 넘기고 수정되는거 작성하기 (PostDetail)
+        onEdit={onEdit}
         onDelete={openPopup}
       />
       {isOpen && (

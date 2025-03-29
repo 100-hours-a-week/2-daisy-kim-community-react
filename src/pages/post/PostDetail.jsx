@@ -6,15 +6,26 @@ import toast from "react-hot-toast";
 import { getPostDetail } from "@api/postApi";
 import { useEffect, useState } from "react";
 import defaultProfileImage from "@assets/default-profile.jpeg";
-import { postCreateComment, getCommentList } from "@api/commentApi";
+import {
+  postCreateComment,
+  getCommentList,
+  patchEditComment,
+} from "@api/commentApi";
 
 export default function PostDetail() {
   const { id } = useParams();
   const [post, setPost] = useState(null);
   const [comment, setComment] = useState("");
   const [commentList, setCommentList] = useState([]);
+  const [editCommentId, setEditCommentId] = useState(null);
 
   const handleRegisterComment = async () => {
+    console.log("댓글 수정 요청!", {
+      postId: id,
+      commentId: editCommentId,
+      content: comment,
+    });
+
     const userId = localStorage.getItem("userId");
 
     if (!comment.trim()) {
@@ -28,13 +39,21 @@ export default function PostDetail() {
     }
 
     try {
-      const res = await postCreateComment(id, {
-        content: comment,
-        userId: Number(userId),
-      });
-      console.log("댓글 등록 성공", res);
-      toast.success("댓글이 등록되었습니다.");
+      if (editCommentId) {
+        await patchEditComment(id, editCommentId, {
+          content: comment,
+          userId: Number(userId),
+        });
+        toast.success("댓글이 수정되었습니다.");
+      } else {
+        await postCreateComment(id, {
+          content: comment,
+          userId: Number(userId),
+        });
+        toast.success("댓글이 등록되었습니다.");
+      }
       setComment("");
+      setEditCommentId(null);
 
       const updatedComments = await getCommentList(id);
       setCommentList(updatedComments.data);
@@ -97,7 +116,7 @@ export default function PostDetail() {
               />
               <WriteButtonWrapper>
                 <WriteButton onClick={handleRegisterComment}>
-                  댓글 등록
+                  {editCommentId ? "댓글 수정" : "댓글 등록"}
                 </WriteButton>
               </WriteButtonWrapper>
             </WriteCommentSection>
@@ -110,6 +129,10 @@ export default function PostDetail() {
                   author={comment.author.nickname}
                   date={comment.createdAt}
                   content={comment.content}
+                  onEdit={() => {
+                    setComment(comment.content);
+                    setEditCommentId(comment.commentId);
+                  }}
                 />
               ))}
             </CommentSection>
